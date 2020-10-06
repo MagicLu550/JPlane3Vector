@@ -12,21 +12,19 @@ public class Line implements Relationship {
         this.position02 = position02;
     }
 
+    //到时候会改造这部分代码
     public boolean vertical(Relationship v){
         if(v instanceof Line){
             Vector3 v1 = ((Line) v).getVector();
             return v1.vertical(this.getVector());
-        }
-        if(v instanceof Vector3){
+        }else if(v instanceof Vector3){
             return v.vertical(this.getVector());
-        }
-        if(v instanceof Plane){
+        }else{
             Position[] positions = ((Plane) v).getPositions();
             Line line1 = new Line(positions[0],positions[1]);
             Line line2 = new Line(positions[1],positions[2]);
             return line1.vertical(this) && line2.vertical(this);
         }
-        return false;
     }
 
     @Override
@@ -45,6 +43,14 @@ public class Line implements Relationship {
             return line1.parallel(this) && line2.parallel(this);
         }
         return false;
+    }
+
+    public Position getPosition01() {
+        return position01;
+    }
+
+    public Position getPosition02() {
+        return position02;
     }
 
     /**

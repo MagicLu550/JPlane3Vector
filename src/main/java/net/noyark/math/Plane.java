@@ -50,7 +50,7 @@ public class Plane {
     public double getDihedralAngle(Plane p2){
         Vector3 v1 = this.getNormalVector();
         Vector3 v2 = p2.getNormalVector();
-        return v1.dotProduct(v2) / (v1.mod() * v2.mod());
+        return Math.abs(v1.dotProduct(v2)) / (v1.mod() * v2.mod());
     }
 
     public Position[] getPositions() {

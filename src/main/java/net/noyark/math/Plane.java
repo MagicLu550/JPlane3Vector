@@ -11,7 +11,7 @@ package net.noyark.math;
  * 7. 一条线的投影
  * 8. 构建复杂几何模型（Shape类
  */
-public class Plane {
+public class Plane implements Relationship {
 
     private Position position01;
 
@@ -40,6 +40,17 @@ public class Plane {
         double z = lambda * (v1.getY()*v2.getX() - v2.getY() * v1.getX())/yUnder;
         this.normalVector = Vector3.createVector(new Position(x,lambda,z));
         return normalVector;
+    }
+
+    @Override
+    public boolean vertical(Relationship v) {
+
+        return false;
+    }
+
+    @Override
+    public boolean parallel(Relationship v) {
+        return false;
     }
 
     /**

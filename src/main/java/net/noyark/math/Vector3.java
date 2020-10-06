@@ -1,6 +1,6 @@
 package net.noyark.math;
 
-public class Vector3 {
+public class Vector3 implements Relationship {
 
     public static final Vector3 ZERO = Vector3.createVector(
             Position.ZERO,
@@ -38,6 +38,10 @@ public class Vector3 {
         return vector3.y/this.y == lambda && (vector3.z / this.z == lambda);
     }
 
+    public boolean parallel(Relationship relationship){
+        return isCollineation((Vector3) relationship);
+    }
+
     /**
      * 向量的模
      * @return
@@ -68,8 +72,8 @@ public class Vector3 {
         return this.x * v.x + this.y * v.y + this.z + v.z;
     }
 
-    public boolean isVertical(Vector3  v){
-        return dotProduct(v) == 0;
+    public boolean vertical(Relationship v){
+        return v instanceof Vector3 && dotProduct((Vector3) v) == 0;
     }
 
 

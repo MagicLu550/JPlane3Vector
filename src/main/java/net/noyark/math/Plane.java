@@ -19,6 +19,8 @@ public class Plane {
 
     private Position position03;
 
+    private Vector3 normalVector;
+
 
     public Plane(Position position01, Position position02, Position position03) {
         this.position01 = position01;
@@ -28,6 +30,7 @@ public class Plane {
 
 
     public Vector3 getNormalVector(){
+        if(normalVector != null)return normalVector;
         Vector3 v1 = Vector3.createVector(position01,position02);
         Vector3 v2 = Vector3.createVector(position02,position03);
         double xUnder = (v1.getZ()*v2.getX() - v1.getX() * v2.getZ());
@@ -35,7 +38,8 @@ public class Plane {
         double lambda = xUnder * yUnder;
         double x = (lambda * v2.getZ() * v1.getY() - lambda * v1.getZ() * v2.getY() )/ xUnder;
         double z = lambda * (v1.getY()*v2.getX() - v2.getY() * v1.getX())/yUnder;
-        return Vector3.createVector(new Position(x,lambda,z));
+        this.normalVector = Vector3.createVector(new Position(x,lambda,z));
+        return normalVector;
     }
 
     /**

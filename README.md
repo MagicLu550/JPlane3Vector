@@ -1,6 +1,6 @@
 <h1 align="center">JPlane3Vector</h1>
 
-<div align="center">基于空间向量实现的几何解析工具</div>
+<div align="center">基于java实现实现的矢量几何解析工具</div>
 
 - [ ] 线面平行和线线平行
 - [X] 判断点线在面上

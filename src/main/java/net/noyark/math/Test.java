@@ -10,6 +10,6 @@ public class Test {
                 ,new Position(0,2,2)
                 ,new Position(3,4,5)
         );
-        System.out.println(p1.getNormalVector());
+        System.out.println(p1.containsPoint(new Position(0,0,1)));
     }
 }

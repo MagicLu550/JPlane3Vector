@@ -76,7 +76,7 @@ public class Plane implements Relationship {
         //之后证明两个点分别在两个平面上
         return containsPoint(p1) && containsPoint(p2);
     }
-    
+
     public boolean containsPoint(Position p1){
 
         Vector3 v1 = Vector3.createVector(p1,position01);//1

@@ -20,10 +20,8 @@ public class Line implements Relationship {
         }else if(v instanceof Vector3){
             return v.vertical(this.getVector());
         }else{
-            Position[] positions = ((Plane) v).getPositions();
-            Line line1 = new Line(positions[0],positions[1]);
-            Line line2 = new Line(positions[1],positions[2]);
-            return line1.vertical(this) && line2.vertical(this);
+            // 是否和该平面的法向量共线
+            return ((Plane) v).getNormalVector().isCollineation(this.getVector());
         }
     }
 
@@ -35,12 +33,9 @@ public class Line implements Relationship {
         }else if(v instanceof Vector3){
             return v.parallel(this.getVector());
         }else{
-            Position[] positions = ((Plane) v).getPositions();
-            Line line1 = new Line(positions[0],positions[1]);
-            Line line2 = new Line(positions[1],positions[2]);
+            // 不在该平面且和该平面法向量垂直
             return (!((Plane) v).contains(this))
-                    && line1.parallel(this)
-                    && line2.parallel(this);
+                    && this.vertical(((Plane)v).getNormalVector());
         }
     }
 

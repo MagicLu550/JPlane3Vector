@@ -1,6 +1,6 @@
 <h1 align="center">JPlane3Vector</h1>
 
-基于空间向量实现的几何解析工具
+<div align="center">基于空间向量实现的几何解析工具</div>
 
 - [ ] 线面平行和线线平行
 - [X] 判断线在面上

@@ -32,11 +32,9 @@ public class Line implements Relationship {
         if(v instanceof Line){
             Vector3 v1 = ((Line) v).getVector();
             return v1.parallel(this.getVector());
-        }
-        if(v instanceof Vector3){
+        }else if(v instanceof Vector3){
             return v.parallel(this.getVector());
-        }
-        if(v instanceof Plane){
+        }else{
             Position[] positions = ((Plane) v).getPositions();
             Line line1 = new Line(positions[0],positions[1]);
             Line line2 = new Line(positions[1],positions[2]);
@@ -44,7 +42,6 @@ public class Line implements Relationship {
                     && line1.parallel(this)
                     && line2.parallel(this);
         }
-        return false;
     }
 
     public Position getPosition01() {

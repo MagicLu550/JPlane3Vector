@@ -65,44 +65,29 @@ public class Plane implements Relationship {
     }
 
     /**
-     * 证明一条线位于一个平面内
+     * 证明一条线位于一个平面上
      * @param line
      * @return
      */
     public boolean contains(Line line){
-        //获得两个点
         Position p1 = line.getPosition01();
         Position p2 = line.getPosition02();
-        //之后证明两个点分别在两个平面上
         return containsPoint(p1) && containsPoint(p2);
     }
 
+    /**
+     * 判断一点是否在该平面内
+     * @param p1
+     * @return
+     */
     public boolean containsPoint(Position p1){
-
-        Vector3 v1 = Vector3.createVector(p1,position01);//1
-        Vector3 p1p2 = Vector3.createVector(position01,position02);
-        Vector3 p1p3 = Vector3.createVector(position01,position03);
-
-
-        double x1 = v1.getX();
-        double x2 = p1p2.getX();
-        double x3 = p1p3.getX();
-        double y1 = v1.getY();
-        double y2 = p1p2.getY();
-        double y3 = p1p3.getY();
-        double z1 = v1.getZ();
-        double z2 = p1p2.getZ();
-        double z3 = p1p3.getZ();
-
-        double b1 = (x2 * y1 - x1 * y2)/(y3 * x2 - y2 * x3);
-        double b2 = (z1 * y2 - z2 * y1) / (z3 * y2 - y3 * z2);
-
-        double a1 = (y3 * x1 - y1 * x3 ) / (x2 * y3 - y2 * x3);
-
-        double a2 = (z3 * y1 - z1 * y3)/(y2 * z3 - z2 * y3);
-
-        return b1 == b2 && a1 == a2;
+        return crossComparison(
+                Vector3.createVector(p1,position01),
+                Vector3.createVector(position01,position02),
+                Vector3.createVector(position01,position03)
+        );
     }
+
 
     /**
      * 求两平面二面角
@@ -118,4 +103,29 @@ public class Plane implements Relationship {
     public Position[] getPositions() {
         return new Position[]{position01,position02,position03};
     }
+
+    /**
+     * 交叉运算比较，向量共面
+     * @param v1
+     * @param p1p2
+     * @param p1p3
+     * @return
+     */
+    private boolean crossComparison(Vector3 v1,Vector3 p1p2,Vector3 p1p3){
+        double x1 = v1.getX();
+        double x2 = p1p2.getX();
+        double x3 = p1p3.getX();
+        double y1 = v1.getY();
+        double y2 = p1p2.getY();
+        double y3 = p1p3.getY();
+        double z1 = v1.getZ();
+        double z2 = p1p2.getZ();
+        double z3 = p1p3.getZ();
+        double b1 = (x2 * y1 - x1 * y2) / (y3 * x2 - y2 * x3);
+        double b2 = (z1 * y2 - z2 * y1) / (z3 * y2 - y3 * z2);
+        double a1 = (y3 * x1 - y1 * x3) / (x2 * y3 - y2 * x3);
+        double a2 = (z3 * y1 - z1 * y3) / (y2 * z3 - z2 * y3);
+        return b1 == b2 && a1 == a2;
+    }
+
 }

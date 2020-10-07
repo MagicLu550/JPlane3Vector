@@ -40,7 +40,9 @@ public class Line implements Relationship {
             Position[] positions = ((Plane) v).getPositions();
             Line line1 = new Line(positions[0],positions[1]);
             Line line2 = new Line(positions[1],positions[2]);
-            return line1.parallel(this) && line2.parallel(this);
+            return (!((Plane) v).contains(this))
+                    && line1.parallel(this)
+                    && line2.parallel(this);
         }
         return false;
     }

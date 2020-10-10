@@ -61,6 +61,27 @@ public class Plane implements SpatialAggregation {
         }
     }
 
+    @Override
+    public double direction(Position p) {
+        return Vector3Math.linePlaneDirectionFormula(Vector3.createVector(p,this.position01),this.getNormalVector());
+    }
+
+    /**
+     * 在使用前请判断一下是否平行，否则计算会不准确
+     * @param v
+     * @return
+     */
+    @Override
+    public double direction(SpatialAggregation v) {
+        if(!v.parallel(this))return -1;
+        // 线面距离
+        if(v instanceof Line){
+            return v.direction(this);
+        }else{
+            // 面面距离
+            return direction(((Plane)v).position01);
+        }
+    }
 
     /**
      * 证明平行
@@ -111,10 +132,27 @@ public class Plane implements SpatialAggregation {
      * @param p2
      * @return
      */
-    public double getDihedralAngle(Plane p2){
+    public Angle getAngle(Plane p2){
         Vector3 v1 = this.getNormalVector();
         Vector3 v2 = p2.getNormalVector();
-        return Math.abs(v1.dotProduct(v2)) / (v1.mod() * v2.mod());
+        return new Angle(
+                Math.acos(
+                        Math.abs(v1.dotProduct(v2)) / (v1.mod() * v2.mod())
+                )
+        );
+    }
+
+    /**
+     * 求一线和一面的夹角
+     */
+    public Angle getAngle(Line l){
+        return new Angle(
+                Math.asin(
+                        Math.abs(
+                                this.getNormalVector().dotProduct(l.getVector())
+                        )
+                )
+        );
     }
 
     public Position[] getPositions() {

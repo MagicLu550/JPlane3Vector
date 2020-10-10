@@ -39,9 +39,17 @@ public class SRCS {
         return l;
     }
 
+    /**
+     * 可视化
+     */
+    public void show(){
+
+    }
+
     public static SRCS createSpatialRectangularCoordinateSystem(){
         return new SRCS();
     }
+
 
 
 

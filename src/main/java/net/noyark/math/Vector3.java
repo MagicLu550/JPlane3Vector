@@ -67,10 +67,18 @@ public class Vector3 implements SpatialAggregation {
         return createVector(new Position(this.x - vector3.x,this.y - vector3.y,this.z - vector3.z));
     }
 
-    public Vector3 scalar(int lamb){
+    public Vector3 scalar(double lamb){
         return createVector(new Position(this.x * lamb,this.y * lamb,this.z * lamb));
     }
 
+    /**
+     * 获得两个向量的夹角
+     * @param v
+     * @return
+     */
+    public Angle angle(Vector3 v){
+        return new Angle(Math.acos(this.dotProduct(v) / (this.mod() * v.mod())));
+    }
     //数乘
     public double dotProduct(Vector3 v){
         return this.x * v.x + this.y * v.y + this.z + v.z;

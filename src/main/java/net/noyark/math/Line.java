@@ -12,6 +12,25 @@ public class Line implements SpatialAggregation {
         this.position02 = position02;
     }
 
+    @Override
+    public double direction(SpatialAggregation v) {
+        if(!v.parallel(this))return -1;
+        // 线线距离
+        if(v instanceof Line){
+            return direction(((Line) v).position01);
+        }else{
+            return Vector3Math.linePlaneDirectionFormula(
+                    Vector3.createVector(this.position01,((Plane)v).getPositions()[0]),
+                    ((Plane)v).getNormalVector()
+            );
+        }
+    }
+
+    @Override
+    public double direction(Position p) {
+        return Vector3Math.lineLineDirectionFormula(Vector3.createVector(p,this.position01),this.getVector());
+    }
+
     //到时候会改造这部分代码
     public boolean vertical(SpatialAggregation v){
         // 线和线垂直
@@ -25,6 +44,22 @@ public class Line implements SpatialAggregation {
             // 线和平面垂直
             return ((Plane) v).getNormalVector().isCollineation(this.getVector());
         }
+    }
+
+    @Override
+    public Angle getAngle(Line l) {
+        return new Angle(
+                Math.acos(
+                        Math.abs(
+                                l.getVector().dotProduct(l.getVector())
+                        )
+                )
+        );
+    }
+
+    @Override
+    public Angle getAngle(Plane p2) {
+        return p2.getAngle(this);
     }
 
     @Override

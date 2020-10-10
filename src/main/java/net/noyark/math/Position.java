@@ -3,7 +3,7 @@ package net.noyark.math;
 /**
  * 点类
  */
-public class Position {
+public class Position implements SpatialElement{
 
     public static final Position ZERO = new Position(0,0,0);
 

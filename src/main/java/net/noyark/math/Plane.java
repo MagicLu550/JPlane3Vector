@@ -11,7 +11,7 @@ package net.noyark.math;
  * 7. 一条线的投影
  * 8. 构建复杂几何模型（Shape类
  */
-public class Plane implements Relationship {
+public class Plane implements SpatialAggregation {
 
     private Position position01;
 
@@ -48,9 +48,17 @@ public class Plane implements Relationship {
      * @return
      */
     @Override
-    public boolean vertical(Relationship v) {
-
-        return false;
+    public boolean vertical(SpatialAggregation v) {
+        // 平面和平面垂直
+        if(v instanceof Plane){
+            return ((Plane) v).normalVector.vertical(this.normalVector);
+        // 平面和线垂直
+        }else if(v instanceof Line){
+            return v.vertical(this);
+        // 平面和向量垂直
+        }else{
+            return v.parallel(this.normalVector);
+        }
     }
 
 
@@ -60,8 +68,17 @@ public class Plane implements Relationship {
      * @return
      */
     @Override
-    public boolean parallel(Relationship v) {
-        return false;
+    public boolean parallel(SpatialAggregation v) {
+        // 平面和平面平行
+        if(v instanceof  Plane){
+            return ((Plane) v).normalVector.isCollineation(this.normalVector);
+        }else if(v instanceof Line){
+            // 平面和线平行
+            return v.parallel(this);
+        }else{
+            // 平面和向量平行
+            return v.vertical(this.normalVector);
+        }
     }
 
     /**
@@ -72,7 +89,7 @@ public class Plane implements Relationship {
     public boolean contains(Line line){
         Position p1 = line.getPosition01();
         Position p2 = line.getPosition02();
-        return containsPoint(p1) && containsPoint(p2);
+        return contains(p1) && contains(p2);
     }
 
     /**
@@ -80,7 +97,7 @@ public class Plane implements Relationship {
      * @param p1
      * @return
      */
-    public boolean containsPoint(Position p1){
+    public boolean contains(Position p1){
         return crossComparison(
                 Vector3.createVector(p1,position01),
                 Vector3.createVector(position01,position02),

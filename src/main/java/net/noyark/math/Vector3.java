@@ -1,6 +1,6 @@
 package net.noyark.math;
 
-public class Vector3 implements Relationship {
+public class Vector3 implements SpatialAggregation {
 
     public static final Vector3 ZERO = Vector3.createVector(
             Position.ZERO,
@@ -38,8 +38,12 @@ public class Vector3 implements Relationship {
         return vector3.y/this.y == lambda && (vector3.z / this.z == lambda);
     }
 
-    public boolean parallel(Relationship relationship){
-        return isCollineation((Vector3) relationship);
+    public boolean parallel(SpatialAggregation relationship){
+        if(relationship instanceof Vector3){
+            return isCollineation((Vector3) relationship);
+        }else{
+            return relationship.parallel(this);
+        }
     }
 
     /**
@@ -72,8 +76,12 @@ public class Vector3 implements Relationship {
         return this.x * v.x + this.y * v.y + this.z + v.z;
     }
 
-    public boolean vertical(Relationship v){
-        return v instanceof Vector3 && dotProduct((Vector3) v) == 0;
+    public boolean vertical(SpatialAggregation v){
+        if(v instanceof Vector3){
+            return dotProduct((Vector3) v) == 0;
+        }else{
+            return v.vertical(this);
+        }
     }
 
 

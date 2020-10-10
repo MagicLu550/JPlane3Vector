@@ -12,11 +12,11 @@ public class SRCS {
 
     // 每一个平面对应一个对象，
     // 判断依据是：这个三个点是否都在某个平面上
-    private static List<Plane> planes = new ArrayList<>();
+    private List<Plane> planes = new ArrayList<>();
 
-    private static List<Line> lines = new ArrayList<>();
+    private List<Line> lines = new ArrayList<>();
 
-    public static Plane definePlane(Position p1,Position p2,Position p3){
+    public Plane definePlane(Position p1,Position p2,Position p3){
 
         for(Plane p : planes){
             if(p.contains(p1) && p.contains(p2) && p.contains(p3)){
@@ -28,7 +28,7 @@ public class SRCS {
         return p;
     }
 
-    public static Line defineLine(Position p1,Position p2){
+    public Line defineLine(Position p1,Position p2){
         for(Line l : lines){
             if(l.contains(p1) && l.contains(p2)){
                 return l;
@@ -38,5 +38,11 @@ public class SRCS {
         lines.add(l);
         return l;
     }
+
+    public static SRCS createSpatialRectangularCoordinateSystem(){
+        return new SRCS();
+    }
+
+
 
 }
